@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>台積電碳排放管理之ESG研究｜期末成果展示</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Tokens ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #0A1628;
+      --navy2:   #0F1F3D;
+      --slate:   #1E3A5F;
+      --teal:    #00C9B1;
+      --teal2:   #00A896;
+      --white:   #F0F4F8;
+      --grey:    #8899AA;
+      --grey2:   #C8D6E3;
+      --card-bg: #112240;
+      --radius:  12px;
+      --font-en: 'Inter', sans-serif;
+      --font-zh: 'Noto Sans TC', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: var(--font-zh);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,22,40,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,201,177,0.15);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 60px;
+    }
+    .nav-logo {
+      font-family: var(--font-en); font-weight: 700; font-size: 14px;
+      color: var(--teal); letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      color: var(--grey2); text-decoration: none; font-size: 13px; font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+
+    /* ── Section scaffold ── */
+    section { padding: 96px 0 80px; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+
+    .section-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-en); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 16px;
+    }
+    .section-eyebrow::before {
+      content: ''; display: block; width: 28px; height: 2px; background: var(--teal);
+    }
+    .section-title {
+      font-size: clamp(26px, 4vw, 40px); font-weight: 700;
+      color: var(--white); margin-bottom: 12px; line-height: 1.3;
+    }
+    .section-subtitle {
+      color: var(--grey2); font-size: 16px; max-width: 640px; margin-bottom: 48px;
+    }
+
+    /* ── Glow divider (signature element) ── */
+    .glow-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--teal), transparent);
+      box-shadow: 0 0 16px rgba(0,201,177,0.5);
+      margin: 0;
+      animation: pulse-line 3s ease-in-out infinite;
+    }
+    @keyframes pulse-line {
+      0%, 100% { opacity: 0.6; }
+      50%       { opacity: 1; }
+    }
+
+    /* ── Hero ── */
+    #hero {
+      padding-top: 140px; padding-bottom: 100px;
+      background:
+        radial-gradient(ellipse 80% 60% at 60% 40%, rgba(0,201,177,0.07) 0%, transparent 70%),
+        var(--navy);
+      position: relative; overflow: hidden;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: rgba(0,201,177,0.12); border: 1px solid rgba(0,201,177,0.3);
+      color: var(--teal); padding: 6px 16px; border-radius: 999px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 24px;
+    }
+    .hero-title {
+      font-size: clamp(30px, 5.5vw, 58px); font-weight: 800;
+      line-height: 1.18; color: var(--white);
+      max-width: 800px; margin-bottom: 28px;
+    }
+    .hero-title span { color: var(--teal); }
+    .hero-abstract {
+      color: var(--grey2); font-size: 16px; max-width: 700px;
+      margin-bottom: 20px; line-height: 1.8;
+    }
+    .hero-meta {
+      color: var(--grey); font-size: 13px; font-family: var(--font-en);
+      letter-spacing: 0.04em;
+    }
+    .hero-stats {
+      display: flex; gap: 48px; margin-top: 52px; flex-wrap: wrap;
+    }
+    .stat-item { display: flex; flex-direction: column; gap: 4px; }
+    .stat-num {
+      font-family: var(--font-en); font-size: 36px; font-weight: 800;
+      color: var(--teal); line-height: 1;
+    }
+    .stat-label { color: var(--grey2); font-size: 13px; }
+
+    /* ── Team ── */
+    #team { background: var(--navy2); }
+    .team-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+    }
+    .member-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius); padding: 36px 32px;
+      transition: border-color .25s, transform .25s;
+    }
+    .member-card:hover {
+      border-color: rgba(0,201,177,0.35);
+      transform: translateY(-4px);
+    }
+    .member-photo {
+      width: 88px; height: 88px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--slate), var(--teal2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px; font-weight: 700; color: var(--white);
+      margin-bottom: 20px;
+      border: 2px solid rgba(0,201,177,0.4);
+    }
+    .member-name {
+      font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 4px;
+    }
+    .member-role {
+      font-size: 12px; font-weight: 600; color: var(--teal);
+      letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;
+    }
+    .member-bio {
+      color: var(--grey2); font-size: 14px; line-height: 1.85;
+    }
+
+    /* ── Research Report ── */
+    #report { background: var(--navy); }
+    .embed-wrapper {
+      background: var(--card-bg);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius); overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .embed-wrapper iframe {
+      width: 100%; height: 600px; display: block; border: none;
+    }
+    .embed-fallback {
+      width: 100%; height: 600px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 16px; color: var(--grey2); text-align: center; padding: 32px;
+    }
+    .embed-fallback .big-icon { font-size: 56px; }
+    .embed-fallback p { font-size: 15px; max-width: 400px; line-height: 1.6; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 600;
+      cursor: pointer; text-decoration: none; transition: all .2s; border: none;
+    }
+    .btn-primary {
+      background: var(--teal); color: var(--navy);
+    }
+    .btn-primary:hover { background: var(--teal2); transform: translateY(-1px); }
+    .btn-outline {
+      border: 1px solid rgba(0,201,177,0.5); color: var(--teal);
+      background: transparent;
+    }
+    .btn-outline:hover {
+      background: rgba(0,201,177,0.1); border-color: var(--teal);
+    }
+
+    /* ── Slides ── */
+    #slides { background: var(--navy2); }
+
+    /* ── Podcast ── */
+    #podcast { background: var(--navy); }
+    .podcast-player {
+      background: var(--card-bg);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius); padding: 40px;
+    }
+    .podcast-header {
+      display: flex; gap: 24px; align-items: flex-start; margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .podcast-thumb {
+      width: 100px; height: 100px; border-radius: 12px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--slate), var(--teal2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 40px;
+    }
+    .podcast-info { flex: 1; min-width: 200px; }
+    .podcast-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .podcast-desc { color: var(--grey2); font-size: 14px; line-height: 1.7; }
+    .audio-notice {
+      background: rgba(0,201,177,0.08); border: 1px solid rgba(0,201,177,0.2);
+      border-radius: 8px; padding: 16px 20px;
+      color: var(--grey2); font-size: 13px; margin-bottom: 24px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    audio {
+      width: 100%; height: 48px;
+      filter: invert(1) hue-rotate(150deg) saturate(0.6);
+      margin-bottom: 24px;
+      border-radius: 8px;
+    }
+    .transcript-section { margin-top: 8px; }
+    .transcript-title {
+      font-size: 13px; font-weight: 600; color: var(--grey);
+      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;
+    }
+
+    /* ── Video ── */
+    #video { background: var(--navy2); }
+    .video-wrapper {
+      background: var(--card-bg);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius); overflow: hidden;
+    }
+    video {
+      width: 100%; display: block; max-height: 560px; object-fit: contain;
+      background: #000;
+    }
+    .video-meta {
+      padding: 20px 28px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+      gap: 12px;
+    }
+    .video-meta-title { font-size: 15px; font-weight: 600; color: var(--white); }
+    .video-meta-sub { font-size: 13px; color: var(--grey); margin-top: 2px; }
+
+    /* ── Findings ── */
+    #findings { background: var(--navy); }
+    .findings-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 24px;
+    }
+    .finding-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-left: 3px solid var(--teal);
+      border-radius: var(--radius); padding: 32px 28px;
+      transition: border-color .2s, transform .2s;
+    }
+    .finding-card:hover { transform: translateY(-3px); }
+    .finding-num {
+      font-family: var(--font-en); font-size: 11px; font-weight: 700;
+      color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .finding-headline {
+      font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .finding-body { color: var(--grey2); font-size: 14px; line-height: 1.8; }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--navy2);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 40px 32px; text-align: center;
+    }
+    .footer-logo {
+      font-family: var(--font-en); font-weight: 800; font-size: 16px; color: var(--teal);
+      letter-spacing: 0.08em; margin-bottom: 12px;
+    }
+    .footer-info { color: var(--grey); font-size: 13px; line-height: 1.7; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; }
+      .nav-links { gap: 16px; }
+      .nav-links a { font-size: 12px; }
+      .container { padding: 0 20px; }
+      section { padding: 72px 0 60px; }
+      .hero-stats { gap: 32px; }
+      .podcast-header { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .glow-divider { animation: none; }
+      .member-card, .finding-card { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav>
+  <div class="nav-logo">ESG Research · 2025</div>
+  <ul class="nav-links">
+    <li><a href="#hero">首頁</a></li>
+    <li><a href="#team">團隊</a></li>
+    <li><a href="#report">研究報告</a></li>
+    <li><a href="#slides">簡報</a></li>
+    <li><a href="#podcast">Podcast</a></li>
+    <li><a href="#video">影片</a></li>
+    <li><a href="#findings">研究發現</a></li>
+  </ul>
+</nav>
+
+<!-- ── Hero ── -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-tag">🎓 屏東科技大學企業管理系 · 期末專題</div>
+    <h1 class="hero-title">
+      台積電碳排放管理<br/>之<span>ESG研究</span>
+    </h1>
+    <p class="hero-abstract">
+      本研究聚焦台灣半導體龍頭台積電（TSMC）在ESG框架下的碳排放管理策略，透過文獻分析、企業永續報告解讀與比較個案研究，深入探討氫氟酸廢液循環經濟路徑、供應鏈範疇三減碳挑戰，以及台積電與三星在減碳治理上的策略差異，進而提出具實踐意義的政策建議，為台灣半導體產業的永續轉型提供參考依據。
+    </p>
+    <p class="hero-meta">屏東科技大學 企業管理系一年級B班 ｜ 指導教授：——</p>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">9.9%</span>
+        <span class="stat-label">半導體業佔台灣碳排比例</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">100%</span>
+        <span class="stat-label">氫氟酸原料仰賴進口</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">R8a</span>
+        <span class="stat-label">最優循環回收路徑</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">7.9%</span>
+        <span class="stat-label">半導體業佔台灣GDP</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ── Team ── -->
+<section id="team">
+  <div class="container">
+    <div class="section-eyebrow">Team</div>
+    <h2 class="section-title">團隊成員介紹</h2>
+    <p class="section-subtitle">三位來自屏東科技大學企管系的同學，各司其職共同完成這份期末專題。</p>
+
+    <div class="team-grid">
+
+      <!-- 成員一 -->
+      <div class="member-card">
+        <div class="member-photo">陳</div>
+        <div class="member-name">陳亮晰</div>
+        <div class="member-role">資料蒐集與AI輔助分析</div>
+        <p class="member-bio">
+          大家好，我是陳亮晰，就讀屏東科技大學企業管理系一年級B班。在本次「台積電碳排放管理之ESG研究」專題中，我主要負責使用NotebookLM對話生成資料，以及蒐集報告所需的參考資料與文獻來源。
+        <br/><br/>
+          在籌備過程中，我深刻感受到AI工具在學術研究中的輔助潛力。透過NotebookLM，我能快速整合多份報告與論文，協助團隊梳理氫氟酸廢液循環經濟的複雜概念，並產出結構化的摘要供全組討論。這次經驗讓我體認到，善用科技工具並不是偷懶，而是提升研究效率、讓人力聚焦於更具深度分析的一種現代研究方法。
+        <br/><br/>
+          未來我希望持續精進數位工具的應用能力，結合企管專業知識，在ESG、永續供應鏈等議題上做出更有價值的貢獻。這份報告是我大學第一份正式研究專題，雖然仍有許多不足，但在過程中學習到的方法論與批判性思考，將是我未來學習旅程最重要的資產。
+        </p>
+      </div>
+
+      <!-- 成員二 -->
+      <div class="member-card">
+        <div class="member-photo">張</div>
+        <div class="member-name">張祖鈺</div>
+        <div class="member-role">簡報設計與視覺呈現</div>
+        <p class="member-bio">
+          大家好，我是張祖鈺，就讀屏東科技大學企業管理系一年級B班。本次專題中，我主要負責簡報設計與視覺化呈現，包含使用NotebookLM與Canva製作各頁投影片，將複雜的研究數據轉化為易於理解的圖表與視覺內容。
+        <br/><br/>
+          在設計過程中，我學習到如何以「說故事」的方式引導觀眾理解研究架構：從半導體業的環境挑戰出發，逐步帶入氫氟酸廢液的循環經濟策略比較，最終落地到政策建議。視覺設計並非單純美化，而是要讓資訊層次分明、重點突出，這對我來說是很大的收穫與挑戰。
+        <br/><br/>
+          透過這次專題，我對ESG議題有了全新的認識。過去我以為環保只是企業形象工程，但研究台積電的案例後，才真正理解「減碳即競爭力」的戰略意涵。未來我希望結合設計思維與商業分析，在永續管理領域發展，成為具備跨域整合能力的企管人才。
+        </p>
+      </div>
+
+      <!-- 成員三 -->
+      <div class="member-card">
+        <div class="member-photo">劉</div>
+        <div class="member-name">劉宜珊</div>
+        <div class="member-role">報告撰寫與內容整合</div>
+        <p class="member-bio">
+          大家好，我是劉宜珊，就讀屏東科技大學企業管理系一年級B班。在本次專題中，我主要負責研究報告的文字撰寫與內容整合，包含研究動機、文獻回顧、分析方法說明，以及最終的結論與建議撰寫。
+        <br/><br/>
+          撰寫研究報告對我而言是全新的挑戰。如何將技術性的WIO-EIO模型用白話文解釋清楚、如何從大量數據中提煉出有意義的論點、如何確保論述邏輯前後一致，這些都是我在過程中不斷反覆修正的課題。透過多次與同學討論及參考學術論文寫作規範，我逐漸掌握了學術寫作的基本功。
+        <br/><br/>
+          這次研究讓我印象最深刻的是「R8a同級回收路徑」的戰略價值——它打破了我原本「回收就是好事」的直觀認知，讓我理解並非所有回收策略都具備相同的經濟與環境效益。這種批判性分析的思維，是我認為在商管教育中最珍貴的養分，也將是我繼續深化的方向。
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ── Research Report ── -->
+<section id="report">
+  <div class="container">
+    <div class="section-eyebrow">Research</div>
+    <h2 class="section-title">研究報告</h2>
+    <p class="section-subtitle">半導體業氫氟酸廢液循環經濟策略之環境與經濟衝擊評估報告</p>
+
+    <div class="embed-wrapper">
+      <!-- 上傳至 GitHub Pages 後，將下方 src 改為實際 PDF 路徑 -->
+      <iframe
+        src="半導體業氫氟酸廢液循環經濟策略之環境與經濟衝擊評估報告.pdf"
+        title="研究報告 PDF"
+        onerror="this.style.display='none'; document.getElementById('report-fallback').style.display='flex';"
+      ></iframe>
+      <div class="embed-fallback" id="report-fallback" style="display:none;">
+        <div class="big-icon">📄</div>
+        <p>PDF 預覽需要瀏覽器支援內嵌顯示。<br/>請點擊下方按鈕下載閱讀。</p>
+      </div>
+    </div>
+    <a class="btn btn-primary" href="半導體業氫氟酸廢液循環經濟策略之環境與經濟衝擊評估報告.pdf" download>
+      ⬇ 下載研究報告 PDF
+    </a>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ── Slides ── -->
+<section id="slides">
+  <div class="container">
+    <div class="section-eyebrow">Presentation</div>
+    <h2 class="section-title">簡報成果</h2>
+    <p class="section-subtitle">台灣半導體產業永續轉型：循環經濟與減碳策略分析</p>
+
+    <div class="embed-wrapper">
+      <!-- 將 PPT 轉成 PDF 後，更名為 slides.pdf 放於同目錄 -->
+      <iframe
+        src="Sustainable_Semiconductor_Roadmap.pdf"
+        title="簡報 PDF"
+        onerror="this.style.display='none'; document.getElementById('slides-fallback').style.display='flex';"
+      ></iframe>
+      <div class="embed-fallback" id="slides-fallback" style="display:none;">
+        <div class="big-icon">📊</div>
+        <p>PDF 預覽需要瀏覽器支援內嵌顯示。<br/>請點擊下方按鈕下載閱讀。</p>
+      </div>
+    </div>
+    <a class="btn btn-primary" href="Sustainable_Semiconductor_Roadmap.pdf" download>
+      ⬇ 下載簡報 PDF
+    </a>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ── Podcast ── -->
+<section id="podcast">
+  <div class="container">
+    <div class="section-eyebrow">Podcast</div>
+    <h2 class="section-title">Podcast 播客</h2>
+    <p class="section-subtitle">以對話形式深入討論本研究的核心議題與研究發現。</p>
+
+    <div class="podcast-player">
+      <div class="podcast-header">
+        <div class="podcast-thumb">🎙️</div>
+        <div class="podcast-info">
+          <div class="podcast-title">台積電ESG研究 × 人工智慧報告</div>
+          <div class="podcast-desc">
+            本集 Podcast 由 AI 協助生成對話腳本，帶領聆聽者以輕鬆問答的方式，理解氫氟酸循環回收、R8a策略優勢，以及台積電與三星在減碳治理上的異同，適合作為報告的補充導讀。
+          </div>
+        </div>
+      </div>
+
+      <div class="audio-notice">
+        💡 請確認音訊檔案「人工智慧報告.mov」已與 index.html 置於同一目錄。
+      </div>
+
+      <audio controls>
+        <source src="人工智慧報告.mov" type="video/quicktime" />
+        您的瀏覽器不支援音訊播放，請下載後收聽。
+      </audio>
+
+      <div class="transcript-section">
+        <div class="transcript-title">逐字稿下載</div>
+        <a class="btn btn-outline" href="podcast_transcript.pdf" download>
+          📝 下載逐字稿
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ── Video Overview ── -->
+<section id="video">
+  <div class="container">
+    <div class="section-eyebrow">Video Overview</div>
+    <h2 class="section-title">影片總覽</h2>
+    <p class="section-subtitle">結合簡報視覺與口頭說明，完整呈現本研究的核心論點。</p>
+
+    <div class="video-wrapper">
+      <video controls preload="metadata">
+        <source src="半導體_ESG_與循環經濟.mp4" type="video/mp4" />
+        您的瀏覽器不支援影片播放，請下載後觀看。
+      </video>
+      <div class="video-meta">
+        <div>
+          <div class="video-meta-title">半導體 ESG 與循環經濟</div>
+          <div class="video-meta-sub">台積電碳排放管理專題 Video Overview</div>
+        </div>
+        <a class="btn btn-outline" href="半導體_ESG_與循環經濟.mp4" download>⬇ 下載影片</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ── Findings ── -->
+<section id="findings">
+  <div class="container">
+    <div class="section-eyebrow">Key Findings</div>
+    <h2 class="section-title">研究發現</h2>
+    <p class="section-subtitle">五項核心洞察，點出台灣半導體產業在ESG轉型路徑上的關鍵抉擇。</p>
+
+    <div class="findings-grid">
+
+      <div class="finding-card">
+        <div class="finding-num">Finding 01</div>
+        <div class="finding-headline">R8a 同級回收是唯一兼顧經濟與減碳的最優路徑</div>
+        <p class="finding-body">
+          透過 WIO-EIO 量化模擬，再生電子級氫氟酸（R8a）路徑能同時提升台灣整體附加價值率、降低碳排放密集度，是唯一在經濟與環境指標上雙贏的策略，遠優於降級回收的冰晶石路徑（R8b）。
+        </p>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-num">Finding 02</div>
+        <div class="finding-headline">氫氟酸100%仰賴進口，供應鏈韌性已成國家安全議題</div>
+        <p class="finding-body">
+          台灣境內完全缺乏螢石礦產，電子級氫氟酸原料全面仰賴進口。在國際地緣政治風險升高的背景下，建立國內再生循環體系不僅是環保議題，更是半導體供應鏈安全的戰略必要性。
+        </p>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-num">Finding 03</div>
+        <div class="finding-headline">台積電採主動創新策略，三星偏向被動法規遵循</div>
+        <p class="finding-body">
+          比較個案分析顯示，台積電受蘋果等主要客戶RE100承諾驅動，減碳目標具體且積極投入低碳技術創新；三星電子則以政府監管與投資人壓力為主要驅動力，整體策略較為保守被動。
+        </p>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-num">Finding 04</div>
+        <div class="finding-headline">出口策略存在環境弔詭性，境內碳密集度反而惡化</div>
+        <p class="finding-body">
+          R8b-出口路徑雖增加經濟產出，但因「邊界效應」，台灣境內製程排放被完整計入，再生產品替代國外原生產品的全球減碳紅利卻未被納入評估，導致國家碳排放密集度指標不降反升。
+        </p>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-num">Finding 05</div>
+        <div class="finding-headline">綠色轉型需「雙引擎」驅動，產官學協同缺一不可</div>
+        <p class="finding-body">
+          單靠企業自主減碳或政府法規管制皆有侷限。唯有同時推動高價值物料循環（R8a同級回收）與再生能源導入（RE100綠電），並整合產業、政府與學術研究能量，才能跨越降級回收的天花板，實現淨零半導體的願景。
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="footer-logo">TSMC ESG RESEARCH · 2025</div>
+  <p class="footer-info">
+    屏東科技大學 企業管理系一年級B班<br/>
+    台積電碳排放管理之ESG研究｜期末專題成果展示<br/>
+    <span style="color: rgba(136,153,170,0.5); font-size:12px; margin-top:8px; display:block;">
+      本網站依 GitHub Pages 規格製作，所有媒體檔案請與 index.html 置於同一目錄。
+    </span>
+  </p>
+</footer>
+
+<script>
+  // Fallback: show fallback div if iframe fails to load PDF
+  function initEmbedFallback(iframeId, fallbackId) {
+    const iframe = document.querySelector('#' + iframeId + ' iframe') ||
+                   document.querySelector('section' + iframeId + ' iframe');
+    const fallback = document.getElementById(fallbackId);
+    if (!iframe || !fallback) return;
+    iframe.addEventListener('error', () => {
+      iframe.style.display = 'none';
+      fallback.style.display = 'flex';
+    });
+    // If iframe src is empty or local-only, show fallback gracefully
+    setTimeout(() => {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow?.document;
+        if (!doc || doc.title === '') {
+          // keep showing; let browser handle
+        }
+      } catch(e) { /* cross-origin, that's fine */ }
+    }, 3000);
+  }
+
+  // Smooth scroll for nav
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // Active nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.style.color = link.getAttribute('href') === '#' + entry.target.id
+            ? 'var(--teal)' : '';
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
